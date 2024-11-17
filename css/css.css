@@ -694,7 +694,8 @@ li{
 }
 
 .btn-carrito:hover{
-    padding: 5px 16px !important; 
+    padding: 5px 16
+    px !important; 
     background-color: green !important;
 }
 
