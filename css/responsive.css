@@ -498,16 +498,16 @@
     }
 }
 
-@media (max-width: 410px){
+@media (max-width: 420px){
     .buttons button {
         color: white;
         border: none;
-        padding: 6px 4px;
+        padding: 6px 2px;
         border-radius: 8px;
         cursor: pointer;
         background: transparent;
         transition: 1s;
-        font-size: 15px;
+        font-size: 13px;
         background: #00000080;
     }
 }
