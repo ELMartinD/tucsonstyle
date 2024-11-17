@@ -502,12 +502,12 @@
     .buttons button {
         color: white;
         border: none;
-        padding: 6px 2px;
+        padding: 6px 6px;
         border-radius: 8px;
         cursor: pointer;
         background: transparent;
         transition: 1s;
-        font-size: 13px;
+        font-size: 14px;
         background: #00000080;
     }
 }
