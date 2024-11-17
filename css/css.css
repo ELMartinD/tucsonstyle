@@ -20,6 +20,15 @@ body {
     flex-wrap: wrap;
 }
 
+.icon {
+    width: 40px; /* Ajusta el tamaño */
+    height: 40px;
+    cursor: pointer;
+  }
+  .icon--hamburger-mobile {
+    fill: #000; /* Color del icono */
+  }
+
 .contenedor-1 {
     display: flex;
     width: 100%;
@@ -687,16 +696,16 @@ li{
 }
 
 .btn-carrito {
-    padding: 5px 15px !important;
-    background-color: green;
+    padding: 8px 20px !important;
+    background-color: rgb(255, 255, 255);
     border: 2px solid rgb(0, 0, 0) !important;
     border-radius: 25px;
+    transition: 1s;
 }
 
 .btn-carrito:hover{
-    padding: 5px 16
-    px !important; 
-    background-color: green !important;
+    padding: 5px 20px;
+    background-color: rgb(0, 172, 0) !important;
 }
 
 .carritoimg{

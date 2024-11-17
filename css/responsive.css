@@ -1,3 +1,12 @@
+@media (max-width: 1920px){
+
+    .menu-toggle{
+        display: none;
+    }
+
+}
+
+
 @media (max-width: 1280px){
     .buttons button {
         color: white;
@@ -16,6 +25,10 @@
         align-items: center;
         gap: 5px;
         width: 40%;
+    }
+
+    .menu-toggle{
+        display: none;
     }
 }
 
@@ -118,6 +131,10 @@
     .categorias:hover{
         width: 300px;
     }
+
+    .menu-toggle{
+        display: none;
+    }
 }
 
 
@@ -125,11 +142,19 @@
 
 
 
-        .redes {
+    .redes {
         display: flex;
         gap: 50px;
         width: 70%;
         margin-top: 1%;
+    }
+
+    .btn-carrito {
+        padding: 2px 20px !important;
+        background-color: rgb(255, 255, 255);
+        border: 2px solid rgb(0, 0, 0) !important;
+        border-radius: 25px;
+        transition: 1s;
     }
 
     .contenedor-7{
@@ -246,6 +271,10 @@
     .qr {
         width: 125px;
     }
+
+    .menu-toggle{
+        display: none;
+    }
 }
 
 
@@ -255,6 +284,8 @@
         display: flex;
         flex-wrap: wrap;
     }
+
+    
 
     .categorias{
         width: 100%;
@@ -321,11 +352,12 @@
         padding-bottom: 2px;
     }
 
-    .search-bar{
+
+    .logo{
         display: none;
     }
 
-    .logo{
+    .hidden{
         display: none;
     }
 
@@ -497,21 +529,279 @@
         width: 300px;
         margin-left: -40%;
     }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        width: 60%;
+    }
+
+    /* Ajuste para el logo */
+    .logo h1 {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        font-size: 20px;
+        color: white;
+    }
+
+    /* Barra de búsqueda */
+    .search-bar {
+        display: flex;
+        flex: 2;
+        margin-left: 20px;
+    }
+
+    .search-bar input {
+        flex: 1;
+        padding: 7px;
+        border-radius: 4px;
+    }
+
+    .search-bar button {
+        margin-left: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: white;
+    }
+
+    /* Ícono de menú (tres puntos) */
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 24px;
+        color: white;
+    }
+
+    /* Botones del menú (escondidos inicialmente) */
+    .buttons {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 10px;
+        background-color: #2a2a2a;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 8px;
+        z-index: 999;
+    }
+
+
+    /* Estilo de los botones dentro del menú */
+    .buttons {
+        border-top: 2px solid white;
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 45px;
+        left: 0px;
+        background-color: #2a2a2a;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 0px 0px 8px 8px;
+        z-index: 999;
+    }
+
+    button.btn-nav {
+        margin-left: 0px;
+        padding: 10px;
+    }
+
+    /* Botones al pasar el mouse */
+    .buttons button:hover {
+        background: #444444;
+    }
+
+    /* Mostrar botones al activar */
+    .buttons.hidden {
+        display: none;
+    }
+
+    .btn-nav{
+        background-color: transparent !important;
+        color: white !important;
+        border: 1px solid white !important;
+        border-bottom: 4px solid white !important;
+        transition: 1s;
+    }
+
+    .btn-nav:hover{
+        background-color: white !important;
+        color: #000000 !important;
+    }
+
+
+    .buttons:not(.hidden) {
+        display: flex;
+        gap: 4px;
+    }
+
+    .icon {
+        width: 35px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .btn-carrito {
+        padding: 2px 15px !important;
+        background-color: #ffffff;
+        border: 2px solid rgb(0, 0, 0) !important;
+        border-radius: 25px;
+    }
+
 }
 
-@media (max-width: 420px){
-    .buttons button {
-        color: white;
-        border: none;
-        padding: 6px 6px;
-        border-radius: 8px;
-        cursor: pointer;
-        background: transparent;
-        transition: 1s;
-        font-size: 14px;
-        background: #00000080;
+@media (max-width: 420px) {
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: #2a2a2a;
+        position: relative;
+        z-index: 1000;
+        position: fixed;
     }
+
+    /* Ajuste para el logo */
+    .logo h1 {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        font-size: 20px;
+        color: white;
+    }
+
+    /* Barra de búsqueda */
+    .search-bar {
+        display: flex;
+        flex: 2;
+        margin-left: 20px;
+    }
+
+    .search-bar input {
+        flex: 1;
+        padding: 7px;
+        border-radius: 4px;
+    }
+
+    .search-bar button {
+        margin-left: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: white;
+    }
+
+    /* Ícono de menú (tres puntos) */
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 24px;
+        color: white;
+    }
+
+    /* Botones del menú (escondidos inicialmente) */
+    .buttons {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 10px;
+        background-color: #2a2a2a;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 8px;
+        z-index: 999;
+    }
+
+
+    /* Estilo de los botones dentro del menú */
+    .buttons {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 55px;
+        left: 0px;
+        background-color: #2a2a2a;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 0px 0px 8px 8px;
+        z-index: 999;
+    }
+
+    button.btn-nav {
+        margin-left: 0px;
+        padding: 10px;
+    }
+
+    /* Botones al pasar el mouse */
+    .buttons button:hover {
+        background: #444444;
+    }
+
+    /* Mostrar botones al activar */
+    .buttons.hidden {
+        display: none;
+    }
+
+    .btn-nav{
+        background-color: transparent !important;
+        color: white !important;
+        border: 1px solid white !important;
+        border-bottom: 4px solid white !important;
+        transition: 1s;
+    }
+
+    .btn-nav:hover{
+        background-color: white !important;
+        color: #000000 !important;
+    }
+
+
+    .buttons:not(.hidden) {
+        display: flex;
+        gap: 4px;
+    }
+
+    .icon {
+        width: 35px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .btn-carrito {
+        padding: 2px 15px !important;
+        background-color: #ffffff;
+        border: 2px solid rgb(0, 0, 0) !important;
+        border-radius: 25px;
+    }
+
+    .contenedor-1 {
+        display: flex;
+        width: 100%;
+        height: 350px;
+        transition: 2s;
+        background-image: url(/img/photo-1658527311766-890dfd2eda9f.avif);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 10% 25%;
+        margin: 2% auto;
+    }
+
+    .descripcion-iz {
+        margin-top: 75px;
+        margin-left: 5%;
+        width: 295px;
+        border-top-right-radius: 25px;
+    }
+
 }
+
+      
 
 @media (max-width: 376px) {
 

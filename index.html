@@ -24,46 +24,54 @@
         <div class="logo">
           <h1>Tucson Style</h1>
         </div>
+
+        <div class="menu-toggle">
+            <svg focusable="false" class="icon icon--hamburger-mobile" viewBox="0 0 20 16" role="presentation">
+                <path d="M0 14h20v2H0v-2zM0 0h20v2H0V0zm0 7h20v2H0V7z" fill="currentColor" fill-rule="evenodd"></path>
+              </svg>
+        </div>
+      
         <!-- Barra de búsqueda -->
         <div class="search-bar">
           <input type="text" placeholder="Buscar..." id="search-input">
           <button id="search-button">
-            <span class="material-symbols-outlined">
-                search
-                </span>
+            <span class="material-symbols-outlined">search</span>
           </button>
         </div>
-        <!-- Botones -->
-        <div class="buttons">
-          <button data-target="#remeras">Remeras</button>
-          <button data-target="#pantalones">Pantalones</button>
-          <button data-target="#Nosotros">Nosotros</button>
-          <button data-target="#Contacto">Contacto</button>
+        
+      
+        <!-- Botones (escondidos por defecto en móvil) -->
+        <div class="buttons hidden">
+          <button class="btn-nav" data-target="#remeras">Remeras</button>
+          <button class="btn-nav" data-target="#pantalones">Pantalones</button>
+          <button class="btn-nav" data-target="#Nosotros">Nosotros</button>
+          <button class="btn-nav" data-target="#Contacto">Contacto</button>
         </div>
+      
         <!-- Carrito -->
-<div id="carrito" class="carrito-ventana">
-    <div class="carrito-header">
-        <h2>Carrito de Compras</h2>
-        <button id="cerrar-carrito"></button>
-    </div>
-    <div class="carrito-body">
-        <ul id="carrito-lista">
-            <!-- Los productos se agregarán aquí dinámicamente -->
-        </ul>
-    </div>
-    <div class="carrito-footer">
-        <p id="total-carrito">Total: $0</p> <!-- Total dinámico -->
-        <button id="iniciar-compra" style="display: none;">Iniciar Compra</button> <!-- Botón de Iniciar Compra -->
-        <button class="vaciar-carrito" id="vaciar-carrito">Vaciar Carrito</button>
-    </div>
-</div>
-
-<!-- Icono de carrito -->
-<button class="btn-carrito">
-    <img class="carritoimg" src="img/carro-de-la-compra.png" alt="Carrito">
-</button>
-
+        <div id="carrito" class="carrito-ventana">
+          <div class="carrito-header">
+            <h2>Carrito de Compras</h2>
+            <button id="cerrar-carrito"></button>
+          </div>
+          <div class="carrito-body">
+            <ul id="carrito-lista">
+              <!-- Los productos se agregarán aquí dinámicamente -->
+            </ul>
+          </div>
+          <div class="carrito-footer">
+            <p id="total-carrito">Total: $0</p>
+            <button id="iniciar-compra" style="display: none;">Iniciar Compra</button>
+            <button class="vaciar-carrito" id="vaciar-carrito">Vaciar Carrito</button>
+          </div>
+        </div>
+      
+        <!-- Icono de carrito -->
+        <button class="btn-carrito">
+          <img class="carritoimg" src="img/carro-de-la-compra.png" alt="Carrito">
+        </button>
       </nav>
+      
 
     <div class="contenedor-principal">
 
@@ -99,14 +107,14 @@
                 </div>
         </div>
 
-        <div class="contenedor-4">
+        <div class="contenedor-4" id="remeras">
             <div class="acercademi-3 fade-in">
                 <p class="f2"></p>
             </div>
         </div>
     
         <!-- Sección de Remeras -->
-<div class="contenedor-3 fade-in" id="remeras">
+<div class="contenedor-3 fade-in">
     <div class="seccionropa">
         <!-- Producto 1 - Remera Beige -->
         <div class="ropas">
@@ -170,14 +178,14 @@
     </div>
 </div>
 
-<div class="contenedor-4">
+<div class="contenedor-4" id="pantalones">
     <div class="acercademi-3 fade-in">
         <p class="f2"></p>
     </div>
 </div>
 
 <!-- Sección de Pantalones -->
-<div class="contenedor-3 fade-in" id="pantalones">
+<div class="contenedor-3 fade-in">
     <div class="seccionropa">
         <!-- Producto 1 - Pantalón de Lino -->
         <div class="ropas">
@@ -449,6 +457,14 @@ barras.forEach(barra => {
         searchSection();
       }
     });
+  </script>
+
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+  const buttons = document.querySelector('.buttons');
+  buttons.classList.toggle('hidden');
+});
+
   </script>
 
 <script src="script.js"></script>
