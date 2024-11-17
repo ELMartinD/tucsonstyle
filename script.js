@@ -101,7 +101,7 @@ btnIniciarCompra.addEventListener('click', () => {
   const totalFormateado = total.toFixed(2); // Asegurar que el total tenga dos decimales
 
   // Crear la URL para Mercado Pago con el total (esto sería solo un ejemplo de cómo redirigir)
-  const urlPago = `https://link.mercadopago.com.ar/tuquisito/redirect?pref_id=${totalFormateado}`;
+  const urlPago = `https://link.mercadopago.com.ar/tuquisito`;
 
 
   // Redirigir al usuario a la URL de Mercado Pago
