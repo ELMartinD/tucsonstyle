@@ -287,6 +287,8 @@
 
     
 
+    
+
     .categorias{
         width: 100%;
         height: 200px;
@@ -573,6 +575,8 @@
         cursor: pointer;
         font-size: 24px;
         color: white;
+        margin-left: 2%;
+        margin-top: 1%;
     }
 
     /* Botones del menú (escondidos inicialmente) */
