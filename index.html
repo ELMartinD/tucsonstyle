@@ -126,30 +126,29 @@
             </div>
         </div>
 
-        <div>
 
 
-        <div class="contenedor-3 fade-in">
-            <div class="seccionropa">
-                 <!-- Productos dinámicos de la base de datos -->
-                 <div id="remerasContainer" class="contenedor-3">
-        <div class="seccionropa" id="productos-lista">
-            <!-- Los productos se cargarán aquí mediante Ajax -->
+            <div class="contenedor-3 fade-in">
+                <div class="seccionropa">
+                     <!-- Productos dinámicos de la base de datos -->
+                     <div id="remerasContainer" class="contenedor-3">
+            <div class="seccionropa" id="productos-lista">
+                <!-- Los productos se cargarán aquí mediante Ajax -->
+            </div>
+        </div>
+    
+        <script>
+            // Usamos Ajax para cargar productos desde el archivo PHP
+            fetch('remeras.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('productos-lista').innerHTML = data;
+                })
+                .catch(error => console.log('Error al cargar productos:', error));
+        </script>
+            </div>
         </div>
     </div>
-
-    <script>
-        // Usamos Ajax para cargar productos desde el archivo PHP
-        fetch('remeras.php')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('productos-lista').innerHTML = data;
-            })
-            .catch(error => console.log('Error al cargar productos:', error));
-    </script>
-        </div>
-    </div>
-</div>
 
 
 
@@ -719,5 +718,9 @@ document.addEventListener('DOMContentLoaded', cargarCarrito);
 
 </body>
 </html>
+
+
+
+
 
 
