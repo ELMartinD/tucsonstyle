@@ -668,6 +668,15 @@
 }
 
 @media (max-width: 420px) {
+
+    .ropas {
+        width: 45%;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: #fff;
+        transition: 1s;
+        height: 335px;
+    }
     .navbar {
         display: flex;
         align-items: center;
@@ -686,6 +695,14 @@
         margin: 0;
         font-size: 20px;
         color: white;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    h1.producto-nombre {
+        font-size: 20px;
     }
 
     /* Barra de búsqueda */
@@ -817,6 +834,10 @@
       
 
 @media (max-width: 376px) {
+
+    h1.producto-nombre {
+        font-size: 18px;
+    }
 
     *{
         font-size: 20px;

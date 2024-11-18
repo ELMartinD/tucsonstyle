@@ -4,62 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Productos</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+            margin-top: 20px;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        button,
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para el mensaje de éxito o error */
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 10px;
+            background-color: #e7f7e7;
+            border: 1px solid #a3d6a3;
+            border-radius: 5px;
+            color: #2c662d;
+        }
+
+        .error {
+            background-color: #f9e3e3;
+            border: 1px solid #f0b1b1;
+            color: #b13b3b;
+        }
+
+    </style>
 </head>
 <body>
-    <h2>Agregar Producto</h2>
-    <form id="formularioProducto">
-        <input type="file" name="imagen" id="imagen" required><br><br>
-        <input type="text" id="titulo" placeholder="Título del producto" required><br><br>
-        <input type="number" id="precioContado" placeholder="Precio de contado" required><br><br>
-        <input type="number" id="precioCuotas" placeholder="Precio en cuotas" required><br><br>
-        <button type="submit">Agregar Producto</button>
-    </form>
+    <div class="container">
+        <h2>Agregar Producto</h2>
+        <form id="formularioProducto">
+            <input type="file" name="imagen" id="imagen" required><br><br>
+            <input type="text" id="titulo" placeholder="Título del producto" required><br><br>
+            <input type="number" id="precioContado" placeholder="Precio de contado" required><br><br>
+            <input type="number" id="precioCuotas" placeholder="Precio en cuotas" required><br><br>
+
+            <!-- Campo para seleccionar la sección -->
+            <select id="seccion" required>
+                <option value="remeras">Remeras</option>
+                <option value="pantalones">Pantalones</option>
+                <option value="shorts">Shorts</option>
+                <option value="buzos">Buzos</option>
+            </select>            
+
+            <button type="submit">Agregar Producto</button>
+        </form>
+
+        <div id="message" class="message"></div>
+    </div>
 
     <script>
-        document.getElementById("formularioProducto").addEventListener("submit", function(event) {
-            event.preventDefault();
+document.getElementById("formularioProducto").addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-            // Obtener los valores del formulario
-            const imagen = document.getElementById("imagen").files[0];
-            const titulo = document.getElementById("titulo").value;
-            const precioContado = document.getElementById("precioContado").value;
-            const precioCuotas = document.getElementById("precioCuotas").value;
+    // Obtenemos los valores del formulario
+    const imagen = document.getElementById("imagen").files[0];
+    const titulo = document.getElementById("titulo").value;
+    const precioContado = parseFloat(document.getElementById("precioContado").value);
+    const precioCuotas = parseFloat(document.getElementById("precioCuotas").value);
+    const seccion = document.getElementById("seccion").value; // Captura la sección seleccionada (remeras, pantalones, etc.)
 
-            // Verificar si se seleccionó una imagen
-            if (imagen) {
-                const reader = new FileReader();
-                reader.onloadend = function () {
-                    // Guardar la imagen como base64 en localStorage
-                    const imagenBase64 = reader.result;
+    // Verificamos que los campos requeridos estén llenos
+    if (imagen && titulo && !isNaN(precioContado) && !isNaN(precioCuotas)) {
+        const reader = new FileReader();
+        reader.onloadend = async function() {
+            // Creamos el objeto producto con todos los datos
+            const producto = {
+                imagen: reader.result, // Imagen en base64
+                titulo,
+                precio_contado: precioContado,
+                precio_cuotas: precioCuotas,
+                tipo_producto: seccion, // Enviar la sección como tipo_producto
+            };
 
-                    // Crear un objeto de producto
-                    const producto = {
-                        imagen: imagenBase64,
-                        titulo: titulo,
-                        precioContado: precioContado,
-                        precioCuotas: precioCuotas
-                    };
+            try {
+                // Enviamos los datos a la API (api.php)
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(producto),
+                });
 
-                    // Obtener los productos actuales de localStorage (simulando el archivo "datos")
-                    let productos = JSON.parse(localStorage.getItem("datos")) || [];
+                const result = await response.json();
+                const message = document.getElementById("message");
 
-                    // Agregar el nuevo producto
-                    productos.push(producto);
+                if (result.success) {
+                    // Si todo sale bien, mostramos el mensaje de éxito
+                    message.textContent = result.success;
+                    message.classList.remove("error");
+                    message.classList.add("success");
+                } else {
+                    // Si hay un error, mostramos el mensaje de error
+                    message.textContent = result.error;
+                    message.classList.remove("success");
+                    message.classList.add("error");
+                }
 
-                    // Guardar la lista de productos nuevamente en localStorage
-                    localStorage.setItem("datos", JSON.stringify(productos));
-
-                    alert("Producto agregado exitosamente");
-                    document.getElementById("formularioProducto").reset(); // Limpiar formulario
-                };
-
-                // Convertir la imagen seleccionada a base64
-                reader.readAsDataURL(imagen);
+                // Reseteamos el formulario después de agregar el producto
+                document.getElementById("formularioProducto").reset();
+            } catch (error) {
+                console.error('Error:', error);
+                const message = document.getElementById("message");
+                message.textContent = "Error al agregar el producto. Intente nuevamente.";
+                message.classList.add("error");
             }
-        });
+        };
+        reader.readAsDataURL(imagen);  // Convertimos la imagen en base64
+    } else {
+        // Si falta algún campo obligatorio, mostramos un mensaje de error
+        const message = document.getElementById("message");
+        message.textContent = "Por favor, complete todos los campos correctamente.";
+        message.classList.add("error");
+    }
+});
+
     </script>
+    
 </body>
 </html>
+
+
+
+
 
 
 

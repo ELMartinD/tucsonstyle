@@ -9,12 +9,13 @@
   font-style: normal;
 }
 
-#productosContainer {
-    display: flex; /* Cambia a flexbox */
-    flex-wrap: wrap; /* Permite que los elementos colapsen hacia abajo */
-    gap: 16px; /* Espaciado entre los elementos */
-    justify-content: space-between; /* Espaciado uniforme */
+.remeras-contenedor{
+    width: 100%;
+    display: flex;
+    background-color: white;
 }
+
+
 
 .ropas {
     width: calc(25% - 16px); /* Ajusta para 4 productos por fila (modifica según necesidad) */
@@ -517,36 +518,43 @@ a:active{
 
 
 
+/* Contenedor principal de productos */
 .contenedor-3 {
     display: flex;
     justify-content: center;
     padding: 20px;
 }
 
-
+/* Sección de productos con flex y wrapping */
 .seccionropa {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     width: 100%;
-    max-width: 1200px; 
-    justify-content: space-between; 
+    max-width: 1200px;
+    justify-content: space-between;
 }
 
-
+/* Estilo de cada tarjeta de producto */
 .ropas {
     width: 20%;
     border-radius: 10px;
     padding: 15px;
     background-color: #fff;
     transition: 1s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para darle efecto 3D */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
 }
 
+/* Efecto hover para aumentar tamaño */
 .ropas:hover {
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
-
+/* Estilo para la imagen de los productos */
 .ropaimg img {
     width: 100%;
     height: 200px;
@@ -555,6 +563,20 @@ a:active{
     border-radius: 8px;
 }
 
+/* Estilo para el nombre y el precio */
+.producto-nombre {
+    font-size: 1.4rem;
+    color: #333;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.precio {
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
+/* Botón de compra */
 .btn-comprar {
     padding: 10px 20px;
     background-color: #00000043;
@@ -573,6 +595,7 @@ a:active{
     color: rgb(255, 255, 255);
 }
 
+/* Estilo de las redes (si las incluyes) */
 .redes {
     display: flex;
     gap: 250px;
@@ -581,14 +604,15 @@ a:active{
     margin-top: 1%;
 }
 
-.redes-img{
+.redes-img {
     width: 50px;
     transition: 1s;
 }
 
-.redes-img:hover{
+.redes-img:hover {
     width: 55px;
 }
+
 
 .contenedor-6{
     display: flex;
