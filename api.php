@@ -1,45 +1,47 @@
 <?php
-// Configuración de la base de datos
+// Conexión a la base de datos
 $host = 'localhost';
-$dbname = 'productos_db'; // Base de datos
-$username = 'root';        // Usuario
-$password = '44659947mB@'; // Contraseña
+$dbname = 'productos_db';
+$username = 'root';
+$password = '44659947mB@';
 
 try {
-    // Establecer conexión a la base de datos
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Obtener los datos enviados desde el frontend
-    $data = json_decode(file_get_contents("php://input"), true);
+    // Obtener los datos del producto enviados por el cliente
+    $data = json_decode(file_get_contents('php://input'), true);
 
-    // Verificamos si los datos existen y son correctos
-    if ($data && isset($data['imagen'], $data['titulo'], $data['precio_contado'], $data['precio_cuotas'], $data['tipo_producto'])) {
-        
-        // Preparamos la consulta SQL para insertar los datos
-        $sql = "INSERT INTO " . $data['tipo_producto'] . " (imagen, titulo, precio_contado, precio_cuotas) VALUES (:imagen, :titulo, :precio_contado, :precio_cuotas)";
+    // Validar los datos recibidos
+    if (isset($data['imagen']) && isset($data['titulo']) && isset($data['precio_contado']) && isset($data['precio_cuotas']) && isset($data['tipo_producto'])) {
+        $imagen = $data['imagen']; // La imagen en base64
+        $titulo = $data['titulo'];
+        $precioContado = $data['precio_contado'];
+        $precioCuotas = $data['precio_cuotas'];
+        $tipoProducto = $data['tipo_producto'];
+
+        // Inserción en la base de datos
+        $sql = "INSERT INTO $tipoProducto (imagen, titulo, precio_contado, precio_cuotas) VALUES (:imagen, :titulo, :precio_contado, :precio_cuotas)";
         $stmt = $pdo->prepare($sql);
-        
-        // Ejecutamos la consulta con los parámetros
-        $stmt->execute([
-            ':imagen' => $data['imagen'], // Imagen en base64
-            ':titulo' => $data['titulo'],
-            ':precio_contado' => $data['precio_contado'],
-            ':precio_cuotas' => $data['precio_cuotas'],
-        ]);
 
-        // Enviamos una respuesta de éxito
-        echo json_encode(['success' => 'Producto agregado correctamente.']);
+        // Ejecutar la consulta con los datos
+        $stmt->bindParam(':imagen', $imagen);
+        $stmt->bindParam(':titulo', $titulo);
+        $stmt->bindParam(':precio_contado', $precioContado);
+        $stmt->bindParam(':precio_cuotas', $precioCuotas);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => 'Producto agregado correctamente']);
+        } else {
+            echo json_encode(['error' => 'Error al agregar el producto. Intente nuevamente.']);
+        }
     } else {
-        // En caso de que falten datos
-        echo json_encode(['error' => 'Faltan datos o datos incorrectos.']);
+        echo json_encode(['error' => 'Datos incompletos']);
     }
 } catch (PDOException $e) {
-    // Error al conectar o ejecutar la consulta
     echo json_encode(['error' => 'Error al conectar a la base de datos: ' . $e->getMessage()]);
 }
 ?>
-
 
 
 
