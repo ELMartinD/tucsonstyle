@@ -17,6 +17,9 @@
 
 
 </head>
+
+
+
 <body>
 
     <nav class="navbar">
@@ -174,6 +177,10 @@
             <div>
                 <button class="btn-comprar">Comprar</button>
             </div>
+        </div>
+
+        <div id="productosContainer"></div>
+
         </div>
     </div>
 </div>
@@ -373,6 +380,7 @@
 
     </div>
 
+
     <script>
         // Usamos Intersection Observer para los elementos con fade-in
 const elements = document.querySelectorAll('.fade-in');
@@ -467,7 +475,77 @@ barras.forEach(barra => {
 
   </script>
 
+
+    
+
 <script src="script.js"></script>
+
+<script>
+// Mostrar productos desde localStorage
+window.onload = function() {
+    const productos = JSON.parse(localStorage.getItem("datos")) || []; // Recuperar productos de "datos"
+    const container = document.getElementById("productosContainer");
+
+    // Si no hay productos, mostrar un mensaje
+    if (productos.length === 0) {
+        container.innerHTML = "<p>No hay productos disponibles.</p>";
+        return;
+    }
+
+    // Iterar a través de los productos y mostrarlos en la página
+    productos.forEach((producto, index) => {
+        const divRopa = document.createElement("div");
+        divRopa.classList.add("ropas");
+
+        divRopa.innerHTML = `
+            <div class="ropaimg">
+                <img class="ropaimg" src="${producto.imagen}" alt="${producto.titulo}">
+            </div>
+            <div>
+                <h1 class="producto-nombre">${producto.titulo}</h1>
+                <p class="precio">$${producto.precioContado}</p>
+                <p>6 cuotas sin interés de $${(producto.precioContado / 6).toFixed(2)}</p>
+            </div>
+            <div>
+                <button class="btn-comprar" data-index="${index}">Comprar</button>
+            </div>
+        `;
+
+        container.appendChild(divRopa);
+    });
+
+    // Asignar el evento de agregar al carrito a los nuevos botones "Comprar"
+    document.querySelectorAll(".btn-comprar").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const index = event.target.getAttribute("data-index");
+            const productoSeleccionado = productos[index];
+            agregarAlCarritoDesdeLocalStorage(productoSeleccionado);
+        });
+    });
+};
+
+</script>
+
+<script>
+    // En carrito.js o un archivo común que compartas entre adm.html y index.html
+// Guardar el carrito en localStorage
+function guardarCarrito() {
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+// Cargar el carrito desde localStorage
+function cargarCarrito() {
+  const carritoGuardado = JSON.parse(localStorage.getItem('carrito'));
+  if (carritoGuardado) {
+    carrito = carritoGuardado;
+    carrito.forEach(producto => agregarAlCarrito(producto.nombre, producto.precio, producto.imagen));
+  }
+}
+
+// Llamar a cargarCarrito cuando se carga la página
+document.addEventListener('DOMContentLoaded', cargarCarrito);
+
+</script>
 
   
   
@@ -476,3 +554,5 @@ barras.forEach(barra => {
 
 </body>
 </html>
+
+

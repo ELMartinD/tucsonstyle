@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Productos</title>
+</head>
+<body>
+    <h2>Agregar Producto</h2>
+    <form id="formularioProducto">
+        <input type="file" name="imagen" id="imagen" required><br><br>
+        <input type="text" id="titulo" placeholder="Título del producto" required><br><br>
+        <input type="number" id="precioContado" placeholder="Precio de contado" required><br><br>
+        <input type="number" id="precioCuotas" placeholder="Precio en cuotas" required><br><br>
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <script>
+        document.getElementById("formularioProducto").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Obtener los valores del formulario
+            const imagen = document.getElementById("imagen").files[0];
+            const titulo = document.getElementById("titulo").value;
+            const precioContado = document.getElementById("precioContado").value;
+            const precioCuotas = document.getElementById("precioCuotas").value;
+
+            // Verificar si se seleccionó una imagen
+            if (imagen) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    // Guardar la imagen como base64 en localStorage
+                    const imagenBase64 = reader.result;
+
+                    // Crear un objeto de producto
+                    const producto = {
+                        imagen: imagenBase64,
+                        titulo: titulo,
+                        precioContado: precioContado,
+                        precioCuotas: precioCuotas
+                    };
+
+                    // Obtener los productos actuales de localStorage (simulando el archivo "datos")
+                    let productos = JSON.parse(localStorage.getItem("datos")) || [];
+
+                    // Agregar el nuevo producto
+                    productos.push(producto);
+
+                    // Guardar la lista de productos nuevamente en localStorage
+                    localStorage.setItem("datos", JSON.stringify(productos));
+
+                    alert("Producto agregado exitosamente");
+                    document.getElementById("formularioProducto").reset(); // Limpiar formulario
+                };
+
+                // Convertir la imagen seleccionada a base64
+                reader.readAsDataURL(imagen);
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

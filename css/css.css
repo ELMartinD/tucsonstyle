@@ -9,6 +9,32 @@
   font-style: normal;
 }
 
+#productosContainer {
+    display: flex; /* Cambia a flexbox */
+    flex-wrap: wrap; /* Permite que los elementos colapsen hacia abajo */
+    gap: 16px; /* Espaciado entre los elementos */
+    justify-content: space-between; /* Espaciado uniforme */
+}
+
+.ropas {
+    width: calc(25% - 16px); /* Ajusta para 4 productos por fila (modifica según necesidad) */
+    box-sizing: border-box; /* Asegura que el padding y el borde no desborden el ancho */
+}
+
+/* Para pantallas pequeñas, adapta el diseño */
+@media (max-width: 768px) {
+    .ropas {
+        width: calc(50% - 16px); /* 2 productos por fila */
+    }
+}
+
+@media (max-width: 480px) {
+    .ropas {
+        width: 100%; /* 1 producto por fila */
+    }
+}
+
+
 /* Fondo de la página */
 body {
     background-color: #2a2a2a;

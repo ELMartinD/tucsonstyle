@@ -21,45 +21,45 @@ btnCerrarCarrito.addEventListener('click', () => {
   carritoVentana.classList.remove('active');
 });
 
-// Función para agregar un producto al carrito
+// Función para agregar un producto al carrito desde el HTML
 function agregarAlCarrito(event) {
   const producto = event.target.closest('.ropas'); // Encuentra el contenedor del producto
   const nombre = producto.querySelector('.producto-nombre').textContent; // Nombre del producto
   const precio = parseFloat(producto.querySelector('.precio').textContent.replace('$', '').replace('.', '').trim()); // Precio del producto
   const imagenSrc = producto.querySelector('.ropaimg img').src; // Imagen del producto
 
+  if (isNaN(precio)) {
+    console.error(`Error: El precio del producto "${nombre}" no es un número válido.`);
+    return;
+  }
+
   // Crear el elemento para el carrito
   const item = document.createElement('li');
   item.classList.add('carrito-item');
   
-  // Convertir el precio al formato adecuado con el símbolo "$"
-  const precioFormateado = `$${precio.toLocaleString()}`; // Agregar el símbolo "$" y formatear el precio
+  const precioFormateado = `$${precio.toLocaleString()}`; // Formatear el precio
 
   item.innerHTML = `
     <img style="width: 110px; height:70px; object-fit: cover;" src="${imagenSrc}" alt="${nombre}">
     <div>
       <h4>${nombre}</h4>
-      <p>${precioFormateado}</p> <!-- Aquí usamos el precio formateado con el símbolo "$" -->
+      <p>${precioFormateado}</p>
     </div>
     <button class="btn-eliminar">Eliminar</button>
   `;
 
-  // Agregar el producto al carrito
   carritoLista.appendChild(item);
-
-  // Guardar el producto en el arreglo "carrito"
-  carrito.push({ nombre, precio, imagenSrc });
+  carrito.push({ nombre, precio, imagenSrc, item });
 
   // Evento para eliminar el producto del carrito
   item.querySelector('.btn-eliminar').addEventListener('click', (event) => {
-    event.stopPropagation(); // Evitar que el clic se propague al contenedor y cierre el carrito
+    event.stopPropagation();
     item.remove();
-    // Eliminar producto del carrito y recalcular el total
-    carrito = carrito.filter(p => p.nombre !== nombre || p.precio !== precio);
+    carrito = carrito.filter(p => p.item !== item);
     actualizarTotal();
   });
 
-  // Abrir el carrito automáticamente cuando se agrega un producto
+  // Abrir el carrito automáticamente
   carritoVentana.classList.add('active');
 
   // Actualizar el total
@@ -70,50 +70,93 @@ function agregarAlCarrito(event) {
 botonesComprar.forEach((boton) => {
   boton.addEventListener('click', (event) => {
     agregarAlCarrito(event);
-    // Abrir el carrito al hacer clic en "Comprar"
-    carritoVentana.classList.add('active');
   });
 });
 
 // Vaciar el carrito
 btnVaciarCarrito.addEventListener('click', () => {
-  carritoLista.innerHTML = ''; // Elimina todos los productos del carrito
-  carrito = []; // Vaciar el arreglo
-  actualizarTotal(); // Actualizar el total
+  carritoLista.innerHTML = '';
+  carrito = [];
+  actualizarTotal();
 });
 
 // Función para actualizar el total
 function actualizarTotal() {
-  const total = carrito.reduce((sum, producto) => sum + producto.precio, 0); // Sumar los precios
-  totalCarrito.textContent = `Total: $${total.toLocaleString()}`; // Actualizar el precio en el HTML
-  // Mostrar el botón de "Iniciar Compra" solo si hay productos en el carrito
-  if (carrito.length > 0) {
-    btnIniciarCompra.style.display = 'block';
-  } else {
-    btnIniciarCompra.style.display = 'none';
-  }
+  const total = carrito.reduce((sum, producto) => {
+    const precio = parseFloat(producto.precio);
+    return isNaN(precio) ? sum : sum + precio;
+  }, 0);
+  
+  totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
+  btnIniciarCompra.style.display = carrito.length > 0 ? 'block' : 'none';
 }
 
 // Función para redirigir al pago
 btnIniciarCompra.addEventListener('click', () => {
-  // Obtener el total del carrito
-  const total = carrito.reduce((sum, producto) => sum + producto.precio, 0); // Sumar los precios
-  const totalFormateado = total.toFixed(2); // Asegurar que el total tenga dos decimales
-
-  // Crear la URL para Mercado Pago con el total (esto sería solo un ejemplo de cómo redirigir)
+  const total = carrito.reduce((sum, producto) => sum + producto.precio, 0);
   const urlPago = `https://link.mercadopago.com.ar/tuquisito`;
-
-
-  // Redirigir al usuario a la URL de Mercado Pago
   window.location.href = urlPago;
 });
 
-// Cerrar el carrito automáticamente al hacer clic fuera, pero no cuando se hace clic en el botón de "Comprar"
+// Cerrar el carrito automáticamente al hacer clic fuera
 window.addEventListener('click', (event) => {
   if (!carritoVentana.contains(event.target) && !btnCarrito.contains(event.target) && !event.target.closest('.btn-comprar')) {
-    carritoVentana.classList.remove('active'); // Ocultar el carrito
+    carritoVentana.classList.remove('active');
   }
 });
+
+// Función para agregar un producto al carrito desde localStorage
+function agregarAlCarritoDesdeLocalStorage(producto) {
+  const precio = parseFloat(producto.precioContado);
+  if (isNaN(precio)) {
+    console.error(`Error: El precio del producto "${producto.titulo}" no es un número válido.`);
+    return;
+  }
+
+  const item = document.createElement('li');
+  item.classList.add('carrito-item');
+
+  const precioFormateado = `$${precio.toLocaleString()}`;
+  item.innerHTML = `
+      <img style="width: 110px; height:70px; object-fit: cover;" src="${producto.imagen}" alt="${producto.titulo}">
+      <div>
+          <h4>${producto.titulo}</h4>
+          <p>${precioFormateado}</p>
+      </div>
+      <button class="btn-eliminar">Eliminar</button>
+  `;
+
+  carritoLista.appendChild(item);
+  carrito.push({ nombre: producto.titulo, precio, imagenSrc: producto.imagen, item });
+
+  item.querySelector('.btn-eliminar').addEventListener('click', (event) => {
+    event.stopPropagation();
+    item.remove();
+    carrito = carrito.filter(p => p.item !== item);
+    actualizarTotal();
+  });
+
+  carritoVentana.classList.add('active');
+  actualizarTotal();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

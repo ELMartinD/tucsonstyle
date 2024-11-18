@@ -309,6 +309,15 @@
         padding: 15px;
         background-color: #fff;
         transition: 1s;
+        height: 350px;
+    }
+
+    .ropaimg img {
+        width: 100%;
+        height: 170px;
+        object-fit: cover;
+        object-position: 0% 40%;
+        border-radius: 8px;
     }
 
     .mediosdepagos {
